@@ -20,6 +20,7 @@ public class FilasDeProcessos {
         int tempo_restante [] = new int [n_processos];
         int tempo_chegada [] = new int [n_processos]; // Tempo de chegada de cada processo
         int prioridade [] = new int [n_processos];
+        int timeSlice;
         
         for(int i=0; i<processo_ID.length; i++){ // Identificando os processos
             processo_ID[i] = i+1;
@@ -40,7 +41,7 @@ public class FilasDeProcessos {
 
         for(int i=0; i<n_processos; i++){
             if(aleator==1){
-                tempo_execucao[i] = aleat.nextInt((10-1)+1)+1; // Inserindo os tempos de execução aleatoriamente
+                tempo_execucao[i] = aleat.nextInt(15)+1; // Inserindo os tempos de execução aleatoriamente
                 tempo_restante[i] = tempo_execucao[i];
 
                 System.out.println("Processo " +processo_ID[i]+": " +tempo_execucao[i]);
@@ -138,6 +139,10 @@ public class FilasDeProcessos {
             }
         }
 
+        System.out.println("-------------------------------------------");
+        System.out.print("Digite o Time-Slice: ");
+            timeSlice = input.nextInt();
+
         for(int i=0; i<n_processos; i++){ // Armazenando o tempo total que o processador vai rodar
             for(int j=tempo_execucao[i]; j>0; j--){
                 tempTot++;
@@ -154,9 +159,12 @@ public class FilasDeProcessos {
             System.out.println("-------------------------------------------");
         }
 
+        System.out.println("TIME-SLICE: "+timeSlice);
+        System.out.println("-------------------------------------------");
+
         System.out.println("Selecione o tipo de escalonamento de processos para processar a fila:");
         System.out.printf("[1] First-in First-out (FIFO) \n[2] Shortest Job First não preemptivo (SJF não preemp)"
-                        + "\n[3] Shortest Job First preemptivo (SJF preemp)\n");
+                        + "\n[3] Shortest Job First preemptivo (SJF preemp)\n[4] Prioridade \n[5] Round Robin\n");
 
         do{
                 escalona = input.nextInt();
@@ -171,11 +179,17 @@ public class FilasDeProcessos {
                 case 3:
                     SJF.sjf(true, processo_ID, tempo_chegada, tempo_execucao, tempo_restante, n_processos, tempTot);
                     break;
+                case 4:
+                    Prioridade.prioridade(processo_ID, tempo_chegada, prioridade);
+                    break;
+                case 5:
+                    Round_Roben.roundRoben(processo_ID, tempo_restante, tempo_chegada, timeSlice, tempTot);
+                    break;
                 default:
                     System.err.println("ERRO!!! DIGITE UMA OPÇÃO VÁLIDA");
             }
 
-        }while(escalona<1 && escalona>3);
+        }while(escalona<1 && escalona>4);
         System.out.println(tempTot);
     }
 }

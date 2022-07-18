@@ -1,7 +1,7 @@
 package filasdeprocessos;
 
-public class SJF {
-    
+public class SJF_NPreemp {
+
     static void sjf(boolean preemp, int processo[], int cheg[], int exe[], int rest[], int numProces, int tempTot){
 
         int menor = 1000;
@@ -53,5 +53,5 @@ public class SJF {
         System.out.println("Media tempo de espera: "+mediaTempEspera);
 
     }
-    
+
 }
